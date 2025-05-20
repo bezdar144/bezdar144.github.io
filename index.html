@@ -118,14 +118,6 @@
                 setTimeout(() => {
                     firework.remove();
                 }, 1500);
-            }
-        }
-        
-        // Автозапуск музыки при первом клике
-        document.addEventListener('click', function init() {
-            document.querySelector('audio').play().catch(e => {});
-            document.removeEventListener('click', init);
-        }, { once: true });
     </script>
 </body>
 </html>
