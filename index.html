@@ -6,23 +6,17 @@
         body {
             margin: 0;
             padding: 0;
-            background: url('https://i.pinimg.com/736x/fd/87/2a/fd872a1c3b81d1c9020b0267f8b313de.jpg') no-repeat center center fixed;
+            background: url('https://i.pinimg.com/736x/fd/87/2a/fd872a1c3b81d1c9020b0267f8b313de.jpg') no-repeat center center fixed') no-repeat center center fixed;
             background-size: cover;
             height: 100vh;
             overflow: hidden;
             font-family: Arial, sans-serif;
-        }
-        
-        #container {
-            position: relative;
-            width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: white;
-            text-shadow: 0 0 5px black;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
         
         #heart {
@@ -30,6 +24,7 @@
             animation: heartbeat 1s infinite;
             cursor: pointer;
             z-index: 10;
+            text-shadow: 0 0 20px #ff0066;
         }
         
         #message {
@@ -67,11 +62,8 @@
     </style>
 </head>
 <body>
-    <div id="container">
-        <div id="heart">❤️</div>
-        <div id="message">Максимка милый, это тебе</div>
-        
-    </div>
+    <div id="heart">❤️</div>
+    <div id="message">Максимка милый, это тебе</div>
 
     <script>
         // Создаем салюты при клике
@@ -79,27 +71,26 @@
             createFireworks(e.clientX, e.clientY);
         });
         
-        // Автозапуск салютов каждые 3 секунды
-        setInterval(function() {
+        // Автозапуск салютов
+        function autoFireworks() {
             createFireworks(
                 Math.random() * window.innerWidth,
                 Math.random() * window.innerHeight
             );
-        }, 3000);
+            setTimeout(autoFireworks, 2000);
+        }
+        autoFireworks();
         
         function createFireworks(x, y) {
             const colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#ff00ff'];
             
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 30; i++) {
                 const firework = document.createElement('div');
                 firework.className = 'firework';
-                
-                // Случайный цвет
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 firework.style.backgroundColor = color;
                 firework.style.boxShadow = `0 0 10px 5px ${color}`;
                 
-                // Случайное направление
                 const angle = Math.random() * Math.PI * 2;
                 const distance = 50 + Math.random() * 100;
                 const tx = Math.cos(angle) * distance;
@@ -107,17 +98,16 @@
                 
                 firework.style.setProperty('--tx', `${tx}px`);
                 firework.style.setProperty('--ty', `${ty}px`);
-                
-                // Позиция
                 firework.style.left = `${x}px`;
                 firework.style.top = `${y}px`;
                 
                 document.body.appendChild(firework);
                 
-                // Удаляем элемент после анимации
                 setTimeout(() => {
                     firework.remove();
                 }, 1500);
+            }
+        }
     </script>
 </body>
 </html>
